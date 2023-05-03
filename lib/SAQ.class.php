@@ -86,7 +86,7 @@ class SAQ extends Modele {
 				} else {
 					$i++;
 				}
-				echo "</p>";
+				echo "</p>" ;
 			}
 		}
 
