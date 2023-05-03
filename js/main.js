@@ -11,54 +11,35 @@
 //const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
 const BaseURL = document.baseURI;
 console.log(BaseURL);
-window.addEventListener('load', function() {
-    console.log("load");
-    document.querySelectorAll(".btnBoire").forEach(function(element){
-        console.log(element);
+ window.addEventListener('DOMContentLoaded', function(){
+
+    document.querySelectorAll("[data-js-qte]").forEach(function(element){
         element.addEventListener("click", function(evt){
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL+"index.php?requete=boireBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
+          let id = evt.target.parentElement.dataset.id;
+          console.log(id)
+          let qte = parseInt(evt.target.dataset.jsQte)
+
+            let requete = new Request(BaseURL+`index.php?requete=modifierQuantiteBouteilleCellier&id=${id}&nombre=${qte}`);
 
             fetch(requete)
             .then(response => {
                 if (response.status === 200) {
-                  return response.json();
+                  console.log(response)
+                  return response;
                 } else {
                   throw new Error('Erreur');
                 }
               })
               .then(response => {
-                console.debug(response);
+                let eQuantite = evt.target.parentElement.parentElement.querySelector('.quantite');
+                let quantite = parseInt(eQuantite.innerHTML.split(':')[1].trim());
+                eQuantite.innerHTML = `Quantité : ${quantite+parseInt(qte)}`;
               }).catch(error => {
                 console.error(error);
               });
         })
-
     });
 
-    document.querySelectorAll(".btnAjouter").forEach(function(element){
-        console.log(element);
-        element.addEventListener("click", function(evt){
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
-
-            fetch(requete)
-            .then(response => {
-                if (response.status === 200) {
-                  return response.json();
-                } else {
-                  throw new Error('Erreur');
-                }
-              })
-              .then(response => {
-                console.debug(response);
-              }).catch(error => {
-                console.error(error);
-              });
-        })
-
-    });
-   
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
     console.log(inputNomBouteille);
     let liste = document.querySelector('.listeAutoComplete');
@@ -80,8 +61,8 @@ window.addEventListener('load', function() {
                 })
                 .then(response => {
                   console.log(response);
-                  
-                 
+
+
                   response.forEach(function(element){
                     liste.innerHTML += "<li data-id='"+element.id +"'>"+element.nom+"</li>";
                   })
@@ -89,8 +70,8 @@ window.addEventListener('load', function() {
                   console.error(error);
                 });
         }
-        
-        
+
+
       });
 
       let bouteille = {
@@ -109,16 +90,17 @@ window.addEventListener('load', function() {
         if(evt.target.tagName == "LI"){
           bouteille.nom.dataset.id = evt.target.dataset.id;
           bouteille.nom.innerHTML = evt.target.innerHTML;
-          
+
           liste.innerHTML = "";
           inputNomBouteille.value = "";
 
         }
       });
 
-      let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
-      if(btnAjouter){
-        btnAjouter.addEventListener("click", function(evt){
+      let btnAjouterNouvelleBouteille = document.querySelector("[name='ajouterBouteilleCellier']");
+      console.log(btnAjouterNouvelleBouteille)
+      if(btnAjouterNouvelleBouteille){
+        btnAjouterNouvelleBouteille.addEventListener("click", function(evt){
           var param = {
             "id_bouteille":bouteille.nom.dataset.id,
             "date_achat":bouteille.date_achat.value,
@@ -138,16 +120,15 @@ window.addEventListener('load', function() {
                     }
                   })
                   .then(response => {
-                    console.log(response);
-                  
+
                   }).catch(error => {
                     console.error(error);
                   });
-        
-        });
-      } 
-  }
-    
 
-});
+        });
+      }
+  }
+
+})
+
 
