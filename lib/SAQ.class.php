@@ -109,8 +109,8 @@ class SAQ extends Modele {
 	private function recupereInfo($noeud) {
 		
 		$info = new stdClass();
-		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
-		;
+		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); 
+		$info->img = strstr($info->img, "?", true); 
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 		
@@ -155,7 +155,7 @@ class SAQ extends Modele {
 		$aElements = $noeud -> getElementsByTagName("span");
 		foreach ($aElements as $node) {
 			if ($node -> getAttribute('class') == 'price') {
-				$info -> prix = trim($node -> textContent);
+				$info -> prix = floatval(str_replace( "," , ".",$node -> textContent,));
 			}
 		}
 		//var_dump($info);
@@ -178,7 +178,7 @@ class SAQ extends Modele {
 
 			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
 			if ($rows -> num_rows < 1) {
-				$this -> stmt -> bind_param("sissssisss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format);
+				$this -> stmt -> bind_param("sissssdsss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format);
 				$retour -> succes = $this -> stmt -> execute();
 				$retour -> raison = self::INSERE;
 				//var_dump($this->stmt);
