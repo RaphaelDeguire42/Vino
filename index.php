@@ -15,7 +15,7 @@
 	 /***************************************************/
     /** Fichier de configuration, contient les define et l'autoloader **/
     /***************************************************/
-    //require_once('./dataconf.php');
+    require_once('./dataconf.php');
 	require_once("./config.php");
 
    /***************************************************/

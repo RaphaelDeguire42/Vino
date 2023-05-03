@@ -67,7 +67,6 @@ class SAQ extends Modele {
 		$doc -> strictErrorChecking = false;
 		@$doc -> loadHTML(self::$_webpage);
 		$elements = $doc -> getElementsByTagName("li");
-		$i = 0;
 		foreach ($elements as $key => $noeud) {
 			//var_dump($noeud -> getAttribute('class')) ;
 			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
@@ -75,22 +74,11 @@ class SAQ extends Modele {
 
 				//echo $this->get_inner_html($noeud);
 				$info = self::recupereInfo($noeud);
-				echo "<p>".$info->nom;
-				$retour = $this -> ajouteProduit($info);
-				echo "<br>Code de retour : " . $retour -> raison . "<br>";
-				if ($retour -> succes == false) {
-					echo "<pre>";
-					var_dump($info);
-					echo "</pre>";
-					echo "<br>";
-				} else {
-					$i++;
-				}
-				echo "</p>";
+				$info->img = strstr($info->img, '?', true);
+				echo '<br>';
+				return $info;
 			}
 		}
-
-		return $i;
 	}
 
 	private function get_inner_html($node) {
@@ -107,13 +95,13 @@ class SAQ extends Modele {
 		return preg_replace('/\s+/', ' ',$chaine);
 	}
 	private function recupereInfo($noeud) {
-		
+
 		$info = new stdClass();
 		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
 		;
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
-		
+
         //var_dump($noeud -> getElementsByTagName("a")->item(1)->textContent);
         $nom = $noeud -> getElementsByTagName("a")->item(1)->textContent;
         //var_dump($a_titre);
@@ -128,12 +116,12 @@ class SAQ extends Modele {
 				$info->desc->texte = self::nettoyerEspace($info->desc->texte);
 				$aDesc = explode("|", $info->desc->texte); // Type, Format, Pays
 				if (count ($aDesc) == 3) {
-					
+
 					$info -> desc -> type = trim($aDesc[0]);
 					$info -> desc -> format = trim($aDesc[1]);
 					$info -> desc -> pays = trim($aDesc[2]);
 				}
-				
+
 				$info -> desc -> texte = trim($info -> desc -> texte);
 			}
 		}
@@ -146,9 +134,9 @@ class SAQ extends Modele {
 				{
 					$info -> desc -> code_SAQ = trim($aRes[0]);
 				}
-				
-				
-				
+
+
+
 			}
 		}
 
@@ -170,7 +158,7 @@ class SAQ extends Modele {
 		//var_dump($bte);
 		// Récupère le type
 		$rows = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
-		
+
 		if ($rows -> num_rows == 1) {
 			$type = $rows -> fetch_assoc();
 			//var_dump($type);
