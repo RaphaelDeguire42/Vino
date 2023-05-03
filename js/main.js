@@ -14,7 +14,6 @@ console.log(BaseURL);
  window.addEventListener('DOMContentLoaded', function(){
 
     document.querySelectorAll("[data-js-qte]").forEach(function(element){
-        console.log(element);
         element.addEventListener("click", function(evt){
           let id = evt.target.parentElement.dataset.id;
           console.log(id)
@@ -98,9 +97,10 @@ console.log(BaseURL);
         }
       });
 
-      let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
-      if(btnAjouter){
-        btnAjouter.addEventListener("click", function(evt){
+      let btnAjouterNouvelleBouteille = document.querySelector("[name='ajouterBouteilleCellier']");
+      console.log(btnAjouterNouvelleBouteille)
+      if(btnAjouterNouvelleBouteille){
+        btnAjouterNouvelleBouteille.addEventListener("click", function(evt){
           var param = {
             "id_bouteille":bouteille.nom.dataset.id,
             "date_achat":bouteille.date_achat.value,

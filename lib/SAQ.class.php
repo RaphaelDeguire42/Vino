@@ -74,8 +74,7 @@ class SAQ extends Modele {
 
 				//echo $this->get_inner_html($noeud);
 				$info = self::recupereInfo($noeud);
-				$info->img = strstr($info->img, '?', true);
-				echo '<br>';
+				$this->ajouteProduit(($info));
 				return $info;
 			}
 		}
@@ -97,8 +96,8 @@ class SAQ extends Modele {
 	private function recupereInfo($noeud) {
 
 		$info = new stdClass();
-		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
-		;
+		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src');
+		$info->img = strstr($info->img, '?', true);
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 

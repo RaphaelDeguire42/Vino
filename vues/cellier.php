@@ -14,6 +14,7 @@ foreach ($data as $cle => $bouteille) {
             <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>
             <p class="type">Type : <?php echo $bouteille['type'] ?></p>
             <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
+            <p class="prix">Prix : <?php echo $bouteille['prix'] ?></p>
             <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
         </div>
         <div class="options" data-id="<?php echo $bouteille['id_bouteille_cellier'] ?>">
