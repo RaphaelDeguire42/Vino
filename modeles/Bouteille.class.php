@@ -161,7 +161,7 @@ class Bouteille extends Modele {
 	{
 		$nombre = intval($nombre);
 		if($id){
-			if($nombre == 1 || $id == -1){
+			if($nombre == 1 || $nombre == -1){
 				$requete = "UPDATE vino__cellier SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE id = ". $id;
 				$res = $this->_db->query($requete);
 				return $res;

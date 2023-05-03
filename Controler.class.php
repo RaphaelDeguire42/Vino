@@ -31,12 +31,6 @@ class Controler
 				case 'ajouterNouvelleBouteilleCellier':
 					$this->ajouterNouvelleBouteilleCellier();
 					break;
-				case 'ajouterBouteilleCellier':
-					$this->ajouterBouteilleCellier();
-					break;
-				case 'boireBouteilleCellier':
-					$this->boireBouteilleCellier();
-					break;
 				case 'modifierQuantiteBouteilleCellier':
 					$this->modifierQteBouteilleCellier();
 				default:
@@ -97,27 +91,9 @@ class Controler
 
 		}
 
-		private function boireBouteilleCellier()
-		{
-			$body = json_decode(file_get_contents('php://input'));
-
-			$bte = new Bouteille();
-			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
-			echo json_encode($resultat);
-		}
-
-		private function ajouterBouteilleCellier()
-		{
-			$body = json_decode(file_get_contents('php://input'));
-
-			$bte = new Bouteille();
-			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
-			echo json_encode($resultat);
-		}
-
 		private function modifierQteBouteilleCellier(){
 			$id = $_GET['id'];
-			$nombre = $_GET['nombre'];
+			$nombre = intval($_GET['nombre']);
 			$bte = new Bouteille();
 			$resultat = $bte->modifierQuantiteBouteilleCellier($id, $nombre);
 		}
