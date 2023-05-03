@@ -74,6 +74,20 @@ class SAQ extends Modele {
 
 				//echo $this->get_inner_html($noeud);
 				$info = self::recupereInfo($noeud);
+
+				echo "<p>".$info->nom;
+				$retour = $this -> ajouteProduit($info);
+				echo "<br>Code de retour : " . $retour -> raison . "<br>";
+				if ($retour -> succes == false) {
+					echo "<pre>";
+					var_dump($info);
+					echo "</pre>";
+					echo "<br>";
+				} else {
+					$i++;
+				}
+				echo "</p>" ;
+
 				$this->ajouteProduit(($info));
 				return $info;
 			}
