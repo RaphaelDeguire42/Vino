@@ -170,9 +170,9 @@ class Bouteille extends Modele {
 	}
 
 	/**
-	 * Cette méthode modifie une bouteille en particulier dans le cellier
+	 * Cette méthode obtient les informations d'un vin avec son id
 	 * @param int $id id de la bouteille
-	 *	@return Boolean Succès ou échec de la modification.
+	 *	@return Array contenant les infos du vin
 	 */
 	public function getUneBouteilleCellier($id)
 	{
