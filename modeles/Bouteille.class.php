@@ -168,6 +168,49 @@ class Bouteille extends Modele {
 			}
 		}
 	}
+
+	/**
+	 * Cette méthode modifie une bouteille en particulier dans le cellier
+	 * @param int $id id de la bouteille
+	 *	@return Boolean Succès ou échec de la modification.
+	 */
+	public function getUneBouteilleCellier($id)
+	{
+		$rows = array();
+		$requete = "SELECT c.id, c.id_bouteille, c.notes, c.garde_jusqua, c.millesime, c.quantite, c.prix, c.date_achat, b.nom FROM vino__cellier c INNER JOIN vino__bouteille b ON c.id_bouteille = b.id WHERE c.id = {$id}";
+		$res = $this->_db->query($requete);
+		if ($res) {
+			while ($row = $res->fetch_assoc()) {
+					$rows[] = $row;
+			}
+			$res->free();
+		} else {
+			throw new Exception("Erreur de requête sur la base de donnée: " . $this->_db->error, 1);
+		}
+		return $rows[0];
+	}
+
+	/**
+	 * Cette méthode modifie une bouteille en particulier dans le cellier
+	 * @param int $id id de la bouteille
+	 *	@return Boolean Succès ou échec de la modification.
+	 */
+	public function modifierBouteilleCellier($data)
+	{
+		if($data){
+			$id= $data->id_cellier;
+			$millesime = $data->millesime;
+			$date_achat = $data->date_achat;
+			$quantite = $data->quantite;
+			$garde = $data->garde_jusqua;
+			$prix= $data->prix;
+			$notes = $data->notes;
+			$requete = "UPDATE vino__cellier SET millesime = ".$millesime.", date_achat = '".$date_achat."',quantite = ".$quantite.", garde_jusqua = '".$garde."', prix = ".$prix. ", notes = '".$notes. "' WHERE id = ". $id;
+
+			$res = $this->_db->query($requete);
+			return $res;
+		}
+	}
 }
 
 
