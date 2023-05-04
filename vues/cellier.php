@@ -18,7 +18,7 @@ foreach ($data as $cle => $bouteille) {
             <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
         </div>
         <div class="options" data-id="<?php echo $bouteille['id_bouteille_cellier'] ?>">
-            <button>Modifier</button>
+            <a class="btnModifier" href="?requete=modifierBouteilleCellier&id=<?= $bouteille['id_bouteille_cellier'] ?>">Modifier</a>
             <button class='btnAjouter' data-js-qte='1'>Ajouter</button>
             <button class='btnBoire' data-js-qte='-1'>Boire</button>
 

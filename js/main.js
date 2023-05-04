@@ -11,7 +11,42 @@
 //const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
 const BaseURL = document.baseURI;
 console.log(BaseURL);
- window.addEventListener('DOMContentLoaded', function(){
+window.addEventListener('DOMContentLoaded', function(){
+
+  let btnModifierNouvelleBouteille = document.querySelector("[name='modifierBouteilleCellier']");
+  console.log(btnModifierNouvelleBouteille)
+  if(btnModifierNouvelleBouteille){
+    btnModifierNouvelleBouteille.addEventListener("click", function(evt){
+      let form = document.querySelector('form');
+      var param = {
+        "id_cellier":form.id_cellier.value,
+        "id_bouteille":form.id_bouteille.value,
+        "date_achat":form.date_achat.value,
+        "garde_jusqua":form.garde_jusqua.value,
+        "notes":form.notes.value,
+        "prix":form.prix.value,
+        "quantite":form.quantite.value,
+        "millesime":form.millesime.value,
+      };
+      let requete = new Request(BaseURL+"index.php?requete=modifierBouteilleCellier", {method: 'POST', body: JSON.stringify(param)});
+        fetch(requete)
+            .then(response => {
+                if (response.status === 200) {
+                  return response;
+                } else {
+                  throw new Error('Erreur');
+                }
+              })
+              .then(response => {
+
+              }).catch(error => {
+                console.error(error);
+              });
+
+    });
+
+  }
+
 
     document.querySelectorAll("[data-js-qte]").forEach(function(element){
         element.addEventListener("click", function(evt){
@@ -127,6 +162,10 @@ console.log(BaseURL);
 
         });
       }
+
+
+
+
   }
 
 })

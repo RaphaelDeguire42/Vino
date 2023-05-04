@@ -83,8 +83,7 @@ class SAQ extends Modele {
 					var_dump($info);
 					echo "</pre>";
 					echo "<br>";
-				} else {
-					$i++;
+				} else {	
 				}
 				echo "</p>" ;
 
@@ -110,8 +109,8 @@ class SAQ extends Modele {
 	private function recupereInfo($noeud) {
 
 		$info = new stdClass();
-		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); 
-		$info->img = strstr($info->img, "?", true); 
+		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src');
+		$info->img = strstr($info->img, "?", true);
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 
